@@ -1,0 +1,11 @@
+{
+  "name": "cache",
+  "version": "0.0.1",
+  "description": "An open source application to aid in the creation of stories by tracking components such as characters",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Hilton",
+  "license": "MIT"
+}

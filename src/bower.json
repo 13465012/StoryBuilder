@@ -1,0 +1,17 @@
+{
+  "name": "StoryBuilder",
+  "description": "An open source application to aid in the creation of stories by tracking components such as characters",
+  "main": "app.js",
+  "authors": [
+    "James Hilton"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
