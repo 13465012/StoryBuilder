@@ -20,27 +20,78 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+ */
 
-*/
+ * {
+	 margin: 0px;
+	 padding: 0px;
+	 color:#fff;
+	 text-shadow:0px 0px 5px #000;
+ }
+ html, body {
+ 	width:100%;
+ 	height:100%;
+ }
+ body {
+ 	font-size:12px;
+ }
 
-// get requirements
-var app = require('electron').app,
-	BrowserWindow = require('electron').BrowserWindow;
+header {
+	position:relative;
+	width:100%;
+	background:#0af;
+	height:5em;
+	border-bottom:solid .25em #000;
+}
+header h1 {
+	position:absolute;
+	left:.25em;
+	font-size:4em;
+}
+header nav {
+	position:absolute;
+	right:.25em;
+	bottom:-.25em;
+	padding-right:1em;
+}
+header nav button {
+	display:block;
+	float:right;
+	background:#05a;
+	border:solid .1875em #000;
+	border-radius:1em 1em 0em 0em;
+	margin-right:-.25em;
+	height:2em;
+	width:6em;
+	font-size:1.5em;
+}
+#sideMenu {
+	position:absolute;
+	top:5.25em;
+	left:0px;
+	bottom:0px;
+	width:30em;
+	border-right:solid .25em #000;
+	background:#05a;
+}
+#main {
+	display:block;
+	width:100%;
+	height:100%;
+	resize:none;
+	border:none;
+	background:#035;
+	outline:none;
+	font-size:1.5em;
 
-// IPC for communicating between the render process and the main process
-var ipc = require('electron').ipcMain;
-
-// initialise main program window
-var mWindow = null;
-app.on('ready',function() {
-
-	// create new browser instance
-	mWindow = new BrowserWindow({width:800,height:450});
-
-	// load home url
-	mWindow.loadURL('file://' + __dirname + '/windows/main/window.html');
-
-	// open debug tools
-	mWindow.openDevTools();
-
-});
+}
+#mainWrap {
+	display:block;
+	position:absolute;
+	background:#035;
+	padding:1em;
+	right:0px;
+	left:30.25em;
+	bottom:0em;
+	top:5.25em
+}
