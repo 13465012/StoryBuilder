@@ -78,13 +78,15 @@ header nav button {
 	display:block;
 	width:100%;
 	min-height:100%;
-	resize:auto;
+	resize:none;
 	border:none;
 	background:#035;
 	outline:none;
 	font-size:1.5em;
 	font-family:monospace;
 	overflow-y:scroll;
+	overflow-x:none;
+	overflow-wrap:break-word;
 }
 #mainSyntax {
 	display:block;
@@ -101,8 +103,11 @@ header nav button {
 	font-family:monospace;
 	white-space:pre-wrap;
 	word-wrap: break-word;
-	color:#f00;
+	color:rgba(255,0,0,0);
+	text-shadow:none;
+	overflow-wrap:break-word;
 	overflow-y:hidden;
+
 }
 #mainSyntax a {
 	pointer-events:all;
@@ -116,5 +121,5 @@ header nav button {
 	left:30.25em;
 	bottom:0em;
 	top:5.25em;
-	overflow-y:scroll;
+	
 }
