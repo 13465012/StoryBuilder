@@ -91,7 +91,7 @@ header nav button {
 	position:absolute;
 	left:10px;
 	top:10px;
-	bottom:0px;
+	bottom:10px;
 	right:27px;
 	/*resize:none;*/
 	border:none;

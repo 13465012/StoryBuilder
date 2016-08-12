@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 		// get contents of text area
 		aTXT = $("#main").val();
-
+		aTXT += "<br />";
 		// copy contents to syntax
 		$("#mainSyntax").html(aTXT);
 
