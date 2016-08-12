@@ -77,21 +77,44 @@ header nav button {
 #main {
 	display:block;
 	width:100%;
-	height:100%;
-	resize:none;
+	min-height:100%;
+	resize:auto;
 	border:none;
 	background:#035;
 	outline:none;
 	font-size:1.5em;
-
+	font-family:monospace;
+	overflow-y:scroll;
+}
+#mainSyntax {
+	display:block;
+	position:absolute;
+	left:10px;
+	top:10px;
+	bottom:10px;
+	right:27px;
+	/*resize:none;*/
+	border:none;
+	outline:none;
+	font-size:1.5em;
+	pointer-events:none;
+	font-family:monospace;
+	white-space:pre-wrap;
+	word-wrap: break-word;
+	color:#f00;
+	overflow-y:hidden;
+}
+#mainSyntax a {
+	pointer-events:all;
 }
 #mainWrap {
 	display:block;
 	position:absolute;
 	background:#035;
-	padding:1em;
+	padding:10px;
 	right:0px;
 	left:30.25em;
 	bottom:0em;
-	top:5.25em
+	top:5.25em;
+	overflow-y:scroll;
 }
