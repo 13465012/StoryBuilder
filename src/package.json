@@ -1,6 +1,9 @@
 {
   "name": "cache",
   "version": "0.0.1",
+  "dependencies": {
+    "jquery": "^3.1.0"
+  },
   "description": "An open source application to aid in the creation of stories by tracking components such as characters",
   "main": "app.js",
   "scripts": {

@@ -28,6 +28,7 @@ SOFTWARE.
 	<head>
 		<title>StoryBuilder</title>
 		<link type="text/css" rel="stylesheet" href="../stylesheets/main.css" />
+		<script src="./main-renderer.js"></script>
 	</head>
 	<body>
 		<!-- Page Header -->
@@ -52,9 +53,10 @@ SOFTWARE.
 
 		<!-- Page Main -->
 		<div id="mainWrap">
-			<div id="main" contenteditable="true">
-				
-			</div>
+			<textarea id="main">test text some bold others not. Some in random span.</textarea>
+			<div id="mainSyntax">test text <b>some bold</b> others not. Some in <a href="#">random span</a>.</div>
 		</div>
+
+
 	</body>
 </html>
