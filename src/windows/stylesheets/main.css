@@ -87,6 +87,7 @@ header nav button {
 	overflow-y:scroll;
 	overflow-x:none;
 	overflow-wrap:break-word;
+	word-wrap: break-word;
 }
 #mainSyntax {
 	display:block;
@@ -105,7 +106,7 @@ header nav button {
 	word-wrap: break-word;
 	color:rgba(255,0,0,0);
 	text-shadow:none;
-	overflow-wrap:break-word;
+	
 	overflow-y:hidden;
 
 }
@@ -121,5 +122,10 @@ header nav button {
 	left:30.25em;
 	bottom:0em;
 	top:5.25em;
-	
+
+}
+
+span.spelling {
+	text-decoration: underline;
+	text-decoration-color: #f00;
 }

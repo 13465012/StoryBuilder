@@ -23,11 +23,14 @@ SOFTWARE.
 
 */
 
-
 window.$ = window.jQuery = require("jquery");
+
+var scheck;
 
 // onload
 $(document).ready(function() {
+	// get spellchecker object
+	scheck = new SpellChecker();
 
 	$('#main').keyup(function(event) {
 
@@ -35,11 +38,19 @@ $(document).ready(function() {
 
 		// get contents of text area
 		var aTXT = $("#main").val();
-		aTXT += "<br />";
 
 		// apply test styling
-		aTXT = aTXT.split("bold");
-		aTXT = aTXT.join("<b>bold</b>");
+		/*aTXT = aTXT.split("bold");
+		aTXT = aTXT.join("<b>bold</b>");*/
+
+		// check spelling
+		aTXT = aTXT.split(" ");
+		for(var x = 0; x < aTXT.length; x++) {
+			if(scheck.isCorrect(aTXT[x]) == false) {
+				aTXT[x] = "<span class='spelling'>" + aTXT[x] + "</span>";
+			}
+		}
+		aTXT = aTXT.join(" ");
 
 		// copy contents to syntax
 		$("#mainSyntax").html(aTXT);
@@ -62,4 +73,5 @@ $(document).ready(function() {
 		var y = $("#main").scrollLeft();
 		$("#mainSyntax").scrollLeft(y);
 	});
+
 });
