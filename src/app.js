@@ -40,7 +40,7 @@ app.on('ready',function() {
 	// load home url
 	mWindow.loadURL('file://' + __dirname + '/windows/main/window.html');
 
-	// open debug tools
-	mWindow.openDevTools();
+	// open debug tools # Update! dev tools cause massive memory leak!
+	//mWindow.openDevTools();
 
 });

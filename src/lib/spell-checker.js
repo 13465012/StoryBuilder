@@ -27,27 +27,57 @@ var fs = require("fs");
 // load UKACD17
 class SpellChecker {
 	constructor() {
+		this.finish = false;
 		fs.readFile('lib/UKACD17/UKACD17.TXT','ascii',(error,contents) => {
 			if(error) throw error;
 			this.ukacd17 = contents;
+			this.tmp = contents.split("\r\n");
+			this.wArray = [
+				"",	// 0 - single letter words
+				"",	// 1 - aa letter words
+				"",	// 2 - ab letter words
+				"",	// 3 - ac letter words
+				"",	// 4 - ad letter words
+				"",	// 5 - ae letter words
+				"",	// 6 - af letter words
+				"",	// 7 - ag letter words
+				"",	// 8 - ah letter words
+				"",	// 9 - ai letter words
+				"",	// 10 - aj letter words
+				""	// 11 - ak letter words
+			];
+			for(var i = 0; i < this.tmp.length;i++) {
+				if(this.tmp[i].length == 1) {
+					this.wArray.push(this.tmp[i]);
+				}
+				else {
+					switch(this.tmp[i][0] + this.tmp[i][1]) {
+						case "aa":this.wArray[1] += (this.tmp[i] + "#");
+					}
+				}
+			}
+			this.finish = true;
+			console.log(this.wArray);
 
 		});
 	}
 
 	// check if word is spelt right, if not a word atall (e.g. 12) it returns true
 	isCorrect(word) {
-		var ret = false;
-		if(word.length > 0) {
-			if(word[word.length - 1] == '.') {
-				word = word.substring(0,word.length - 1);
+		if(this.finish) {
+			this.ret = false;
+			if(word.length > 0) {
+				if(word[word.length - 1] == '.') {
+					word = word.substring(0,word.length - 1);
+				}
+				this.ret = this.wArray[1].includes(word+"#");
+				if(this.ret == false) {
+						this.ret = this.wArray[1].includes(word.toLowerCase()+"#");
+				}
 			}
-			ret = this.ukacd17.includes(word+"\r");
-			if(ret == false) {
-					ret = this.ukacd17.includes(word.toLowerCase()+"\r");
-			}
+			return this.ret;
 		}
-		return ret;
-
+		return true;
 	}
 
 }

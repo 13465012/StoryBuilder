@@ -26,52 +26,73 @@ SOFTWARE.
 window.$ = window.jQuery = require("jquery");
 
 var scheck;
+var checking = false;
+var aTXT = [""];
+
+/*function SplitEvery(string, nSpaces) {
+	var sCount = 0;
+	for(var x = 0;x < string.length)
+}*/
+
+function CheckSpelling(i) {
+	// check word i
+	if(scheck.isCorrect(aTXT[i]) == false) {
+		var tmp = "";
+		for(var c = 0; c < aTXT[i].length;c++) {
+			tmp += "_";
+		}
+		aTXT[i] = "<span class='spelling'>" + tmp + "</span>";
+	}
+	// move to next word
+	i += 1;
+
+	// check if all words checked
+	if(i >= aTXT.length) {
+		$("mainSyntax").empty();
+		$("#mainSyntax").html(aTXT.join(" "));
+		checking = false;
+		console.log("Returned at length " + i);
+		return;
+	}
+
+	// move to next word
+	var memoryStop = setTimeout(CheckSpelling(i), 0);
+	return;
+}
+
+function repeat() {
+	if(checking == false) {
+		aTXT = $("#main").val().split(" ");
+		checking = true;
+		CheckSpelling(0);
+	}
+	var memoryStop = setTimeout(repeat, 100);
+}
 
 // onload
 $(document).ready(function() {
 	// get spellchecker object
 	scheck = new SpellChecker();
 
+
+
 	$('#main').keyup(function(event) {
 
-		// check that space has been pressed
-
-		// get contents of text area
-		var aTXT = $("#main").val();
-
-		// apply test styling
-		/*aTXT = aTXT.split("bold");
-		aTXT = aTXT.join("<b>bold</b>");*/
-
-		// check spelling
-		aTXT = aTXT.split(" ");
-		for(var x = 0; x < aTXT.length; x++) {
-			if(scheck.isCorrect(aTXT[x]) == false) {
-				aTXT[x] = "<span class='spelling'>" + aTXT[x] + "</span>";
-			}
-		}
-		aTXT = aTXT.join(" ");
-
-		// copy contents to syntax
-		$("#mainSyntax").html(aTXT);
 
 		// adjust syntax to main scroll
-		var y = $("#main").scrollTop();
-		$("#mainSyntax").scrollTop(y);
+		$("#mainSyntax").scrollTop($("#main").scrollTop());
 		// adjyst syntax to scroll left;
-		var y = $("#main").scrollLeft();
-		$("#mainSyntax").scrollLeft(y);
+		$("#mainSyntax").scrollLeft($("#main").scrollLeft());
 
 	});
 
 	$('#main').scroll(function() {
 		// adjust syntax to main scroll
-		var y = $("#main").scrollTop();
-		$("#mainSyntax").scrollTop(y);
-
+		$("#mainSyntax").scrollTop($("#main").scrollTop());
 		// adjyst syntax to scroll left;
-		var y = $("#main").scrollLeft();
-		$("#mainSyntax").scrollLeft(y);
+		$("#mainSyntax").scrollLeft($("#main").scrollLeft());
 	});
 
+
+	repeat();
 });
