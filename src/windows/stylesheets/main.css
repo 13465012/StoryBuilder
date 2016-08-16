@@ -107,6 +107,7 @@ header nav button {
 	color:rgba(255,0,0,0);
 	text-shadow:none;
 
+
 	overflow-y:hidden;
 
 }
@@ -128,6 +129,5 @@ header nav button {
 span.spelling {
 	color:#f00;
 	pointer-events:auto;
-	cursor:pointer;
 
 }

@@ -28,26 +28,106 @@ window.$ = window.jQuery = require("jquery");
 var scheck;
 var checking = false;
 var aTXT = [""];
+var aTXTraw = [""];
+var aTXTprev = [""];
 
-/*function SplitEvery(string, nSpaces) {
-	var sCount = 0;
-	for(var x = 0;x < string.length)
-}*/
+function compare_same_length() {
+	var e = aTXTprev.length - 1;
+	var s = 0;
+	var s_move = true;
+	var e_move = true;
+	var changed = [-1,-1];
 
-function CheckSpelling(i) {
+	// find change from start
+	while(s < aTXTprev.length && s_move) {
+		if(aTXTraw[s] != aTXTprev[s]) {
+			changed[0] = s;
+			s_move = false;
+		}
+		else {
+			s++;
+		}
+		if(s == aTXTprev.length) {
+			changed[0] = -1;
+		}
+	}
+
+	// find change from end
+	while(e >= s && e_move) {
+		if(aTXTraw[e] != aTXTprev[e]) {
+			changed[1] = e;
+			e_move = false;
+		}
+		else {
+			if(e == 0) {
+				changed[1] = changed[0];
+				e_move = false;
+			}
+			e--;
+		}
+
+	}
+	return changed;
+}
+
+function match_length_shorter() {
+	var e = aTXTraw.length - 1;
+	var eo = aTXTprev.length - 1;
+	var comp = true;
+
+	while(e >= 0 && comp == true) {
+		if(aTXTraw[e] != aTXTprev[eo]) {
+				aTXTprev.splice(e+1,eo-e);
+				aTXT.splice(e+1,eo-e);
+				comp = false;
+		}
+		e--;
+		eo--;
+	}
+
+}
+
+function match_length_longer() {
+	var e = aTXTraw.length - 1;
+	var eo = aTXTprev.length -1;
+	var matching = true;
+
+	while(eo >= 0 && matching) {
+		if(aTXTraw[e] != aTXTprev[eo]) {
+			for(var i = 0;i< e-eo;i++) {
+				aTXTprev.splice(eo+1,0," ");
+				aTXT.splice(eo+1,0," ");
+			}
+			matching = false;
+		}
+		e--;
+		eo--;
+	}
+}
+
+
+
+function CheckSpelling(i,z) {
 	// check word i
-	if(scheck.isCorrect(aTXT[i]) == false) {
+	if(scheck.isCorrect(aTXTraw[i]) == false) {
 		var tmp = "";
-		for(var c = 0; c < aTXT[i].length;c++) {
+		for(var c = 0; c < aTXTraw[i].length;c++) {
 			tmp += "_";
 		}
-		aTXT[i] = "<span class='spelling'>" + tmp + "</span>";
+		aTXT[i] = "<span class='spelling' onclick=\"alert('a clicked!');\">" + tmp + "</span>";
+	}
+	else {
+		var tmp = "";
+		for(var c = 0; c < aTXTraw[i].length;c++) {
+			tmp += " ";
+		}
+		aTXT[i] = tmp;
 	}
 	// move to next word
 	i += 1;
 
 	// check if all words checked
-	if(i >= aTXT.length) {
+	if(i > z) {
 		$("mainSyntax").empty();
 		$("#mainSyntax").html(aTXT.join(" "));
 		checking = false;
@@ -56,17 +136,31 @@ function CheckSpelling(i) {
 	}
 
 	// move to next word
-	var memoryStop = setTimeout(CheckSpelling(i), 0);
+	setTimeout(CheckSpelling(i,z), 0);
 	return;
 }
 
 function repeat() {
-	if(checking == false) {
-		aTXT = $("#main").val().split(" ");
-		checking = true;
-		CheckSpelling(0);
+	if(checking == false && scheck.finish) {
+		aTXTprev = aTXTraw;
+		aTXTraw = $("#main").val().split(" ");
+
+
+
+		if(aTXTraw.length < aTXTprev.length) {
+			match_length_shorter();
+		}
+		if(aTXTraw.length > aTXTprev.length) {
+			match_length_longer();
+		}
+		var pos = compare_same_length();
+		if(pos[0] != -1 && pos[1] != -1) {
+			//alert(pos);
+			checking = true;
+			CheckSpelling(pos[0],pos[1]);
+		}
 	}
-	var memoryStop = setTimeout(repeat, 100);
+	setTimeout(repeat, 100);
 }
 
 // onload
@@ -77,7 +171,7 @@ $(document).ready(function() {
 
 
 	$('#main').keyup(function(event) {
-
+		repeat();
 
 		// adjust syntax to main scroll
 		$("#mainSyntax").scrollTop($("#main").scrollTop());
@@ -93,6 +187,9 @@ $(document).ready(function() {
 		$("#mainSyntax").scrollLeft($("#main").scrollLeft());
 	});
 
+	/*$(document).click(function() {
+		alert("click interceptted!");
+	});*/
 
 	repeat();
 });
