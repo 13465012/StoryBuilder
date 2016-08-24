@@ -108,21 +108,38 @@ function match_length_longer() {
 
 
 function CheckSpelling(i,z) {
+
 	// check word i
-	if(scheck.isCorrect(aTXTraw[i]) == false) {
-		var tmp = "";
-		for(var c = 0; c < aTXTraw[i].length;c++) {
-			tmp += "_";
+		var included = aTXTraw.includes("\n");
+		var incs = 0;
+		if(included) {
+			for(var x = 0; x < aTXTraw.length;x++) {
+				if(aTXTraw[x] == "\n") {
+					incs++
+				}
+			}
 		}
-		aTXT[i] = "<span class='spelling' onclick=\"alert('a clicked!');\">" + tmp + "</span>";
-	}
-	else {
-		var tmp = "";
-		for(var c = 0; c < aTXTraw[i].length;c++) {
-			tmp += " ";
+		if(scheck.isCorrect(aTXTraw[i]) == false) {
+			var tmp = "";
+			for(var c = 0; c < aTXTraw[i].length;c++) {
+				tmp += "_";
+			}
+			if(included) {
+				for(var x = 0; x < incs;)
+				tmp += "<br/>";
+			}
+			aTXT[i] = "<span id='"+i+"' class='spelling' onclick=\"alert('a clicked!');\">" + tmp + "</span>";
 		}
-		aTXT[i] = tmp;
-	}
+		else {
+			var tmp = aTXTraw[i];
+			/*for(var c = 0; c < aTXTraw[i].length;c++) {
+				tmp += "0";
+			}*/
+			if(included) {
+				tmp += "<br/>";
+			}
+			aTXT[i] = tmp;
+		}
 	// move to next word
 	i += 1;
 
@@ -142,8 +159,11 @@ function CheckSpelling(i,z) {
 
 function repeat() {
 	if(checking == false && scheck.finish) {
+
 		aTXTprev = aTXTraw;
-		aTXTraw = $("#main").val().split(" ");
+		aTXTraw = $("#main").val()
+		aTXTraw = aTXTraw.split(" ");
+
 
 
 
@@ -171,7 +191,14 @@ $(document).ready(function() {
 
 
 	$('#main').keyup(function(event) {
-		repeat();
+		/*// remove empty spans
+		var spans = $('#mainSyntax').children('span');
+		for(var i = spans.length - 1; i >= 0 ; i--) {
+			if(spans[i].innerHTML == "") {
+				$("#mainSyntax").html(aTXT.join(" "));
+				i = -1;
+			}
+		}*/
 
 		// adjust syntax to main scroll
 		$("#mainSyntax").scrollTop($("#main").scrollTop());
