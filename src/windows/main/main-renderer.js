@@ -110,36 +110,27 @@ function match_length_longer() {
 function CheckSpelling(i,z) {
 
 	// check word i
-		var included = aTXTraw.includes("\n");
-		var incs = 0;
-		if(included) {
-			for(var x = 0; x < aTXTraw.length;x++) {
-				if(aTXTraw[x] == "\n") {
-					incs++
+		var word = aTXTraw[i].split('\n');
+		var tmpTXT = "";
+		for(var a = 0; a < word.length;a++) {
+			if(a != 0) {
+				tmpTXT += "<br/>"
+			}
+
+				if(scheck.isCorrect(word[a]) == false) {
+					var tmp = "";
+					for(var c = 0; c < word[a].length;c++) {
+						tmp += "_";
+					}
+					tmpTXT += "<span id='"+i+"' class='spelling' onclick=\"alert('a clicked!');\">" + tmp + "</span>";
 				}
-			}
+				else {
+					var tmp = word[a];
+					tmpTXT += tmp;
+				}
+
 		}
-		if(scheck.isCorrect(aTXTraw[i]) == false) {
-			var tmp = "";
-			for(var c = 0; c < aTXTraw[i].length;c++) {
-				tmp += "_";
-			}
-			if(included) {
-				for(var x = 0; x < incs;)
-				tmp += "<br/>";
-			}
-			aTXT[i] = "<span id='"+i+"' class='spelling' onclick=\"alert('a clicked!');\">" + tmp + "</span>";
-		}
-		else {
-			var tmp = aTXTraw[i];
-			/*for(var c = 0; c < aTXTraw[i].length;c++) {
-				tmp += "0";
-			}*/
-			if(included) {
-				tmp += "<br/>";
-			}
-			aTXT[i] = tmp;
-		}
+		aTXT[i] = tmpTXT;
 	// move to next word
 	i += 1;
 
